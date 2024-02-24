@@ -52,4 +52,9 @@ export class SchoolNewsEntity {
     { name: "school_page_id", referencedColumnName: "schoolPageId" },
   ])
   schoolPage: SchoolPageEntity;
+
+  onChangeTitleAndContent(title: string, content: string) {
+    this.title = title;
+    this.content = content;
+  }
 }

@@ -10,7 +10,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { CommonError } from './common-exception';
 
 import * as dayjs from 'dayjs';
-import { stringifyWithoutCircular } from './common';
+import { stringifyWithoutCircular } from '../common';
 
 /**
  * @Catch(CommonError)

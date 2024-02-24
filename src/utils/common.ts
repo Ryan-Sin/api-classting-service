@@ -1,5 +1,4 @@
-import { pbkdf2Sync, randomBytes, createHash } from "crypto";
-import * as dayjs from "dayjs";
+import { pbkdf2Sync, randomBytes } from "crypto";
 
 /**
  * @author Ryan
@@ -70,48 +69,4 @@ export const passwordDecryption = (salt, password) => {
   );
 
   return decryptionPassword.toString("base64");
-};
-
-/**
- * @author Ryan
- * @description 년월일 값 반환
- */
-export const getYearMonthDay = () =>
-  dayjs().format("YYYY-MM-DD");
-
-/**
- * @author Ryan
- * @description 특정 데이터 sha256으로 암호화
- * @param data 데이터
- */
-export const setHashCode = (data: string) =>
-  createHash("sha256").update(data).digest("hex");
-
-/**
- * @author Ryan
- * @description 랜덤 임시 비밀번호 생성(8~20자 , 숫자 , 소문자 영문, 특수문자 (~ ! @ # $ % ^ * ,) 중 3개 조합 필수)
- * 정규식(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/)
- */
-export const generateTemporaryPassword = () => {
-  const length = 20;
-  const specialChars = "!@#$%^*+=-";
-  const numbers = "0123456789";
-  const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  const getRandomChar = (charSet) => charSet[Math.floor(Math.random() * charSet.length)];
-
-  const password = [
-    getRandomChar(letters),
-    getRandomChar(specialChars),
-    getRandomChar(numbers)
-  ];
-
-  return password.concat(
-    Array.from({ length: length - 3 }, () => {
-      const charSet = letters + specialChars + numbers;
-      return getRandomChar(charSet);
-    })
-  )
-    .sort(() => Math.random() - 0.5)
-    .join("");
 };

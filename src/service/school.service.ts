@@ -1,21 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { Request } from 'express';
-import { CommonError } from 'src/utils/common-exception';
-import { ERROR_TYPE } from '../utils/enum';
-import { ERROR_MESSAGE, STATUS_CODE } from '../utils/constant';
-import { CreateSchoolPageRequestDto } from '../dto/create-school-page-request.dto';
-import { GetSchoolPageListRequestDto } from '../dto/get-school-page-list-request.dto';
+import { Injectable } from "@nestjs/common";
+import { Request } from "express";
+import { CommonError } from "src/utils/exception/common-exception";
+import { ERROR_TYPE } from "../utils/enum";
+import { ERROR_MESSAGE, STATUS_CODE } from "../utils/constant";
+import { CreateSchoolPageRequestDto } from "../dto/create-school-page-request.dto";
+import { GetSchoolPageListRequestDto } from "../dto/get-school-page-list-request.dto";
+import { SchoolRepository } from "../repository/school.repository";
+import { CrewRepository } from "../repository/crew.repository";
+import { SchoolPageRepository } from "../repository/school-page.repository";
+import { assertNotExistCrew } from "./validator/crew-validator";
+import { assertNotExistSchool } from "./validator/school-validator";
+import { plainToInstance } from "class-transformer";
+import { SchoolPageListData } from "../dto/data/school-page-list.data";
+import { AdminInfo } from "../utils/role/user-info";
 
 @Injectable()
 export class SchoolService {
-  createSchoolPage(
+
+  constructor(
+    private readonly crewRepository: CrewRepository,
+    private readonly schoolRepository: SchoolRepository,
+    private readonly schoolPageRepository:SchoolPageRepository,
+  ) {
+  }
+
+  async createSchoolPage(
     createSchoolPageRequestDto: CreateSchoolPageRequestDto,
-    req: Request,
-  ): Promise<any> {
+    admin: AdminInfo,
+  ) {
     try {
-      return new Promise((resolve, reject) => {
-        resolve({});
-      });
+      const { email, schoolRegion, schoolName } = admin
+      const { pageName } = createSchoolPageRequestDto
+
+      const crewEntity = await this.crewRepository.findOneByEmail(email);
+      assertNotExistCrew(crewEntity);
+
+      const schoolEntity = await this.schoolRepository.findOneByReginAndName(schoolRegion, schoolName);
+
+      await this.schoolPageRepository.save(schoolEntity.schoolId, pageName);
     } catch (e) {
       throw new CommonError(
         e.type || ERROR_TYPE.SYSTEM,
@@ -26,14 +48,19 @@ export class SchoolService {
     }
   }
 
-  getSchoolPageList(
+  async getSchoolPageList(
     getSchoolPageListRequestDto: GetSchoolPageListRequestDto,
     req: Request,
-  ): Promise<any> {
+  ): Promise<SchoolPageListData> {
     try {
-      return new Promise((resolve, reject) => {
-        resolve({});
-      });
+      const { schoolRegion, schoolName, offset, limit } = getSchoolPageListRequestDto;
+
+      const schoolEntity = await this.schoolRepository.findOneByRegionAndName(schoolRegion, schoolName);
+      assertNotExistSchool(schoolEntity);
+
+      const [list, totalCount] = await this.schoolPageRepository.findBySchoolIdPagination(schoolEntity.schoolId, offset, limit);
+
+      return plainToInstance(SchoolPageListData, {totalCount, list}, {excludeExtraneousValues: true})
     } catch (e) {
       throw new CommonError(
         e.type || ERROR_TYPE.SYSTEM,

@@ -1,4 +1,4 @@
-import { ERROR_TYPE } from './enum';
+import { ERROR_TYPE } from '../enum';
 
 export class CommonError extends Error {
   type: ERROR_TYPE;

@@ -6,20 +6,25 @@ import {
   Post,
   Body,
   Put,
-  Delete,
-} from '@nestjs/common';
+  Delete, UseGuards, Query
+} from "@nestjs/common";
 import { NewsFeedService } from '../service/news-feed.service';
 import { Request, Response } from 'express';
-import { ApiResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiOperation, ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 import { CreateNewsFeedRequestDto } from '../dto/create-news-feed-request.dto';
 import { CreateNewsFeedResponseDto } from '../dto/create-news-feed-response.dto';
 import { UpdateNewsFeedRequestDto } from '../dto/update-news-feed-request.dto';
 import { UpdateNewsFeedResponseDto } from '../dto/update-news-feed-response.dto';
 import { DeleteNewsFeedRequestDto } from '../dto/delete-news-feed-request.dto';
 import { DeleteNewsFeedResponseDto } from '../dto/delete-news-feed-response.dto';
+import { JwtAuthGuard } from "../utils/guard/jwt-auth.guard";
+import { User } from "../utils/decorator/user.decorator";
+import { AdminInfo } from "../utils/role/user-info";
 
 @Controller('school')
 @ApiTags('school')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class NewsFeedController {
   constructor(private readonly newsFeedService: NewsFeedService) {}
 
@@ -33,11 +38,11 @@ export class NewsFeedController {
   })
   @Post('/v1/page/news-feed')
   async createNewsFeed(
-    @Body() createNewsFeedRequestDto: CreateNewsFeedRequestDto,
-    @Req() req: Request,
+    @Body() body : CreateNewsFeedRequestDto,
+    @User() admin: AdminInfo,
     @Res() res: Response,
   ) {
-    await this.newsFeedService.createNewsFeed(createNewsFeedRequestDto, req);
+    await this.newsFeedService.createNewsFeed(body, admin);
 
     return res.status(HttpStatus.OK).json(new CreateNewsFeedResponseDto());
   }
@@ -52,11 +57,11 @@ export class NewsFeedController {
   })
   @Put('/v1/page/news-feed')
   async updateNewsFeed(
-    @Body() updateNewsFeedRequestDto: UpdateNewsFeedRequestDto,
-    @Req() req: Request,
+    @Body() body: UpdateNewsFeedRequestDto,
+    @User() admin: AdminInfo,
     @Res() res: Response,
   ) {
-    await this.newsFeedService.updateNewsFeed(updateNewsFeedRequestDto, req);
+    await this.newsFeedService.updateNewsFeed(body, admin);
 
     return res.status(HttpStatus.OK).json(new UpdateNewsFeedResponseDto());
   }
@@ -71,11 +76,11 @@ export class NewsFeedController {
   })
   @Delete('/v1/page/news-feed')
   async deleteNewsFeed(
-    @Body() deleteNewsFeedRequestDto: DeleteNewsFeedRequestDto,
-    @Req() req: Request,
+    @Query() query: DeleteNewsFeedRequestDto,
+    @User() admin: AdminInfo,
     @Res() res: Response,
   ) {
-    await this.newsFeedService.deleteNewsFeed(deleteNewsFeedRequestDto, req);
+    await this.newsFeedService.deleteNewsFeed(query, admin);
 
     return res.status(HttpStatus.OK).json(new DeleteNewsFeedResponseDto());
   }

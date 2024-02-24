@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Request } from "express";
-import { CommonError } from "src/utils/common-exception";
+import { CommonError } from "src/utils/exception/common-exception";
 import { ERROR_TYPE, LEVEL } from "../utils/enum";
 import { ERROR_MESSAGE, STATUS_CODE } from "../utils/constant";
 import { CrewSignUpRequestDto } from "../dto/crew-sign-up-request.dto";

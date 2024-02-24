@@ -22,6 +22,14 @@ export const setupSwagger = (app: INestApplication): void => {
     .setDescription('')
     .setVersion('1.0')
     .addServer('http://localhost:3000')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        name: 'JWT',
+        in: 'header',
+      },
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, options);

@@ -13,7 +13,8 @@ export class CrewRepository {
 
   findOneByEmail(email: string) {
    return  this.repository.findOne({
-      where:{email}
+      where:{email},
+     relations: ["school"]
     })
   }
 

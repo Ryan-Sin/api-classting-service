@@ -1,8 +1,8 @@
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './utils/all-exception.filter';
-import { CommonExceptionFilter } from './utils/common-exception.filer';
+import { AllExceptionsFilter } from './utils/exception/all-exception.filter';
+import { CommonExceptionFilter } from './utils/exception/common-exception.filer';
 import { setupSwagger } from './utils/swagger';
 
 async function bootstrap() {

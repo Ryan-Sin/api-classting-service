@@ -11,4 +11,32 @@ export class SchoolPageRepository {
         this.repository = dataSource.getRepository(SchoolPageEntity).extend({});
     }
 
+    save(schoolId: number, name: string) {
+        const schoolPageEntity = this.repository.create({
+            schoolId,
+            name,
+        });
+
+        return this.repository.save(schoolPageEntity)
+    }
+
+  findBySchoolIdPagination(schoolId: number, offset: number, limit: number) {
+      return this.repository.findAndCount({
+          relations: ["school"],
+          where: {
+              schoolId
+          },
+          skip: offset,
+          take: limit,
+      })
+  }
+
+  findBySchoolIdAndName(schoolId: number, name: string) {
+      return this.repository.findOne({
+        where: {
+          schoolId,
+          name
+        }
+      })
+  }
 }

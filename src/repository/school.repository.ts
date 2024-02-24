@@ -28,4 +28,13 @@ export class SchoolRepository {
 
     return this.repository.save(schoolEntity)
   }
+
+  findOneByRegionAndName(region: string, name: string) {
+    return this.repository.findOne({
+      where: {
+        region,
+        name
+      }
+    })
+  }
 }

@@ -1,4 +1,4 @@
-import {CommonError} from "../../utils/common-exception";
+import {CommonError} from "../../utils/exception/common-exception";
 import {ERROR_TYPE} from "../../utils/enum";
 import {ERROR_MESSAGE, STATUS_CODE} from "../../utils/constant";
 import { StudentEntity } from "../../entity/student.entity";

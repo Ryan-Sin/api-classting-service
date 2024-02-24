@@ -1,5 +1,5 @@
 import {CrewEntity} from "../../entity/crew.entity";
-import {CommonError} from "../../utils/common-exception";
+import {CommonError} from "../../utils/exception/common-exception";
 import {ERROR_TYPE} from "../../utils/enum";
 import {ERROR_MESSAGE, STATUS_CODE} from "../../utils/constant";
 

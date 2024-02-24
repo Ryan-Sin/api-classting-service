@@ -11,4 +11,30 @@ export class SchoolNewsRepository {
         this.repository = dataSource.getRepository(SchoolNewsEntity).extend({});
     }
 
+    save(schoolPageId: number, title: string, content: string) {
+        const schoolNewsEntity = this.repository.create({
+            schoolPageId,
+            title,
+            content
+        });
+
+        return this.repository.save(schoolNewsEntity)
+    }
+
+    findOneBySchoolPageIdAndTitle(schoolPageId: number, title: string) {
+        return this.repository.findOne({
+            where: {
+                schoolPageId,
+                title
+            }
+        })
+    }
+
+    update(schoolNewsEntity: SchoolNewsEntity) {
+        return this.repository.update(schoolNewsEntity.schoolNewsId, schoolNewsEntity);
+    }
+
+    softDelete(schoolNewsEntity: SchoolNewsEntity) {
+        return this.repository.softDelete(schoolNewsEntity.schoolNewsId)
+    }
 }

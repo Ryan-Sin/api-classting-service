@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { RequestLoggingMiddleware } from './middleware/request-logging.middleware';
+import { RequestLoggingMiddleware } from './utils/middleware/request-logging.middleware';
 import { AuthModule } from './module/auth.module';
 import { SchoolModule } from './module/school.module';
 import { NewsFeedModule } from './module/news-feed.module';
