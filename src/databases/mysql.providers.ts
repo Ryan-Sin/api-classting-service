@@ -9,6 +9,7 @@ export const MysqlProviders = [
         database: ":memory:",
         entities: ['dist/**/*.entity.{ts,js}'], // Entity 연결
         logging: process.env.NODE_ENV === 'local' ? true : false,
+        synchronize: true
       });
 
       return AppDataSource.initialize().then();
