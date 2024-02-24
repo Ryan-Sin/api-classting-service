@@ -14,4 +14,10 @@ export const STATUS_CODE = {
  */
 export const ERROR_MESSAGE = {
   SERVER_ERROR: '개발팀의 문의해주세요.',
+  UNAUTHORIZED: "유효한 인증 자격 증명이 없습니다.",
+  NOT_EXIST_ADMIN: "관리자 계정이 존재하지 않습니다.",
+  NOT_EXIST_MEMBER: "회원이 존재하지 않습니다.",
+  EXIST_MEMBER: "가입 된 회원입니다.",
+  PASSWORD_MISMATCH: "비밀번호가 일치하지 않습니다.",
+  INVALID_TYPE_SETTING: "올바른 타입을 설정해주세요.",
 };

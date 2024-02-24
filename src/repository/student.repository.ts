@@ -11,4 +11,20 @@ export class StudentRepository {
         this.repository = dataSource.getRepository(StudentEntity).extend({});
     }
 
+  findOneByEmail(email: string) {
+    return this.repository.findOne({
+      where: {
+        email,
+      }
+    })
+  }
+
+  async save(email: string, password: string, salt: string, name: string) {
+    return this.repository.create({
+      email,
+      password,
+      salt,
+      name
+    })
+  }
 }

@@ -1,5 +1,6 @@
-import { IsString } from 'class-validator';
+import { IsEnum, IsString } from "class-validator";
 import { ApiProperty } from '@nestjs/swagger';
+import { LEVEL } from "../utils/enum";
 
 export class SignInRequestDto {
   @ApiProperty({
@@ -17,9 +18,9 @@ export class SignInRequestDto {
   password: string;
 
   @ApiProperty({
-    description: '관리자 || 학생',
+    description: 'ADMIN || STUDENT',
     required: true,
   })
-  @IsString()
-  type: string;
+  @IsEnum(LEVEL)
+  type: LEVEL;
 }

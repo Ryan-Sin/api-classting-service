@@ -17,17 +17,10 @@ export class StudentSignUpRequestDto {
   password: string;
 
   @ApiProperty({
-    description: '학교 지역',
+    description: '이름',
     required: true,
   })
   @IsString()
-  schoolRegion: string;
+  name: string;
 
-  @ApiProperty({
-    description: '학교 이름',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  schoolName?: string;
 }

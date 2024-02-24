@@ -4,7 +4,6 @@ export enum ERROR_TYPE {
 }
 
 export enum LEVEL {
-  SUPER = 'SUPER',
   ADMIN = 'ADMIN',
-  USER = 'USER',
+  STUDENT = 'STUDENT',
 }

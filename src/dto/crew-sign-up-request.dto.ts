@@ -17,6 +17,13 @@ export class CrewSignUpRequestDto {
   password: string;
 
   @ApiProperty({
+    description: '이름',
+    required: true,
+  })
+  @IsString()
+  name: string;
+
+  @ApiProperty({
     description: '학교 지역',
     required: true,
   })

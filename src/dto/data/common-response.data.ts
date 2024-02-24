@@ -1,5 +1,6 @@
 import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import * as dayjs from "dayjs";
 
 export class CommonResponseData {
   @ApiProperty({
@@ -8,7 +9,7 @@ export class CommonResponseData {
     required: true,
   })
   @IsString()
-  createdAt: string;
+  createdAt: string = dayjs().format("YYYY-MM-DDTHH:mm:ss.SSSZ");
 
   @ApiProperty({
     description: '응답 성공 여부.success:성공, fail:실패, disaster:매우 실패',
