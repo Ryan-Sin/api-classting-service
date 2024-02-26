@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   Index,
   JoinColumn,
@@ -27,24 +28,23 @@ export class SchoolPageEntity {
   @Column("varchar", { name: "name", comment: "페이지 이름", length: 50 })
   name: string;
 
-  @Column("datetime", {
-    name: "created_at",
-    comment: "생성일",
-    default: () => "CURRENT_TIMESTAMP"
+  @CreateDateColumn({
+    type: 'datetime',
+    name: 'created_at',
+    comment: '생성일'
   })
   createdAt: Date;
 
-  @OneToMany(() => SchoolNewsEntity, (schoolNews) => schoolNews.schoolPage, {lazy:true})
+  @OneToMany(() => SchoolNewsEntity, (schoolNews) => schoolNews.schoolPage)
   schoolNews: SchoolNewsEntity[];
 
   @ManyToOne(() => SchoolEntity, (school) => school.schoolPages, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
-    lazy: true
   })
   @JoinColumn([{ name: "school_id", referencedColumnName: "schoolId" }])
   school: SchoolEntity;
 
-  @OneToMany(() => SubscriptionEntity, (subscription) => subscription.schoolPage, { lazy: true })
+  @OneToMany(() => SubscriptionEntity, (subscription) => subscription.schoolPage )
   subscriptions: SubscriptionEntity[];
 }

@@ -35,13 +35,12 @@ export class StudentEntity {
   name: string;
 
   @CreateDateColumn({
-    type: "datetime",
-    name: "created_at",
-    comment: "생성일",
-    default: () => "CURRENT_TIMESTAMP"
+    type: 'datetime',
+    name: 'created_at',
+    comment: '생성일'
   })
   createdAt: Date;
 
-  @OneToMany(() => SubscriptionEntity, (subscription) => subscription.student, { lazy: true })
+  @OneToMany(() => SubscriptionEntity, (subscription) => subscription.student)
   subscriptions: SubscriptionEntity[];
 }

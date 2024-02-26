@@ -12,3 +12,12 @@ export const assertNotExistSchoolPage = (schoolPageEntity: SchoolPageEntity) => 
     );
 }
 
+export const assertExistSchoolPage = (schoolPageEntity: SchoolPageEntity) => {
+  if (schoolPageEntity)
+    throw new CommonError(
+      ERROR_TYPE.DEVELOPER,
+      STATUS_CODE.FAIL,
+      ERROR_MESSAGE.EXIST_SCHOOL_PAGE
+    );
+}
+

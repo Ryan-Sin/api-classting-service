@@ -8,7 +8,7 @@ export class SchoolPageData {
     required: true,
   })
   @Expose()
-  @Transform(({obj}) => obj.__school__.region)
+  @Transform(({obj}) => obj.school?.region || obj.schoolPage.school.region)
   @IsString()
   schoolRegion: string;
 
@@ -17,7 +17,7 @@ export class SchoolPageData {
     required: true,
   })
   @Expose()
-  @Transform(({obj}) => obj.__school__.name)
+  @Transform(({obj}) => obj.school?.name ||obj.schoolPage.school.name )
   @IsString()
   schoolName: string;
 
@@ -26,7 +26,7 @@ export class SchoolPageData {
     required: true,
   })
   @Expose()
-  @Transform(({obj}) => obj.name)
+  @Transform(({obj}) => obj?.name ||  obj.schoolPage.name)
   @IsString()
   pageName: string;
 }

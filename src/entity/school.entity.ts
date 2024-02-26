@@ -28,7 +28,7 @@ export class SchoolEntity {
     type: "datetime",
     name: "created_at",
     comment: "생성일",
-    default: () => "CURRENT_TIMESTAMP",
+
   })
   createdAt: Date;
 

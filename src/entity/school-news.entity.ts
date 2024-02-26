@@ -30,8 +30,7 @@ export class SchoolNewsEntity {
   @CreateDateColumn({
     type: "datetime",
     name: "created_at",
-    comment: "생성일",
-    default: () => "CURRENT_TIMESTAMP",
+    comment: "생성일"
   })
   createdAt: Date;
 

@@ -20,11 +20,13 @@ export class StudentRepository {
   }
 
   async save(email: string, password: string, salt: string, name: string) {
-    return this.repository.create({
+     const studentEntity = this.repository.create({
       email,
       password,
       salt,
       name
-    })
+    });
+
+     return this.repository.save(studentEntity);
   }
 }

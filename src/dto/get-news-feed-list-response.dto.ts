@@ -18,5 +18,5 @@ export class GetNewsFeedListResponseDto {
     example: new NewsFeedListData(),
   })
   @IsObject()
-  data: NewsFeedListData = new NewsFeedListData();
+  data: NewsFeedListData;
 }

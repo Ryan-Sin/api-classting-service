@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { SchoolPageEntity } from "./school-page.entity";
 import { StudentEntity } from "./student.entity";
+import dayjs from "dayjs";
 
 @Index("UQ_subscription_1", ["studentId", "schoolPageId"], { unique: true })
 @Entity("subscription", { schema: "classting" })
@@ -28,13 +29,12 @@ export class SubscriptionEntity {
   @Column("datetime", { name: "start_date", comment: "구독 시작일" })
   startDate: Date;
 
-  @Column("datetime", { name: "cancel_date", comment: "구독 취소일" })
+  @Column("datetime", { name: "cancel_date", comment: "구독 취소일", nullable: true})
   cancelDate: Date;
 
   @ManyToOne(() => SchoolPageEntity, (schoolPage) => schoolPage.subscriptions, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
-    lazy: true
   })
   @JoinColumn([
     { name: "school_page_id", referencedColumnName: "schoolPageId" },
@@ -44,8 +44,12 @@ export class SubscriptionEntity {
   @ManyToOne(() => StudentEntity, (student) => student.subscriptions, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
-    lazy: true
+
   })
   @JoinColumn([{ name: "student_id", referencedColumnName: "studentId" }])
   student: StudentEntity;
+
+  cancelSubscription(now: dayjs.Dayjs) {
+    this.cancelDate = now.toDate();
+  }
 }

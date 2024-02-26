@@ -110,7 +110,7 @@ export class NewsFeedService {
   }
 
   private async checkSchoolPage(schoolEntity: SchoolEntity, pageName: string): Promise<SchoolPageEntity> {
-    const schoolPageEntity = await this.schoolPageRepository.findBySchoolIdAndName(schoolEntity.schoolId, pageName);
+    const schoolPageEntity = await this.schoolPageRepository.findOneBySchoolIdAndName(schoolEntity.schoolId, pageName);
     assertNotExistSchoolPage(schoolPageEntity);
     return schoolPageEntity;
   }

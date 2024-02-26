@@ -31,7 +31,7 @@ export class SchoolPageRepository {
       })
   }
 
-  findBySchoolIdAndName(schoolId: number, name: string) {
+  findOneBySchoolIdAndName(schoolId: number, name: string) {
       return this.repository.findOne({
         where: {
           schoolId,

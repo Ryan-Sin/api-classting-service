@@ -18,5 +18,5 @@ export class GetSubscriptionSchoolNewsFeedListResponseDto {
     example: new SchoolPageListData(),
   })
   @IsObject()
-  data: SchoolPageListData = new SchoolPageListData();
+  data: SchoolPageListData;
 }
